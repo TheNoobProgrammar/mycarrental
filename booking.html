@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyCarRental – Booking</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet"/>
+  <!-- Font Awesome for icons -->
+  <link 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+    rel="stylesheet"/>
+  <!-- Optional custom styles -->
+  <link href="assets/css/custom.css" rel="stylesheet"/>
+</head>
+<body>
+  <!-- Shared Navbar -->
+  <div id="header"></div>
+
+  <main class="container my-5">
+    <h2 class="mb-4 text-center">Book Your Car</h2>
+    <form id="booking-form" class="row g-3">
+      <!-- Car selection -->
+      <div class="col-md-6">
+        <label for="car-select" class="form-label">Choose Car</label>
+        <select id="car-select" class="form-select" required>
+          <option value="" disabled selected>Select a car</option>
+          <option value="40">Toyota Corolla – $40/day</option>
+          <option value="55">Honda CR-V – $55/day</option>
+          <option value="80">Ford Mustang – $80/day</option>
+          <option value="45">Volkswagen Golf – $45/day</option>
+        </select>
+      </div>
+
+      <!-- Dates -->
+      <div class="col-md-3">
+        <label for="pickup-date" class="form-label">Pick-Up Date</label>
+        <input type="date" id="pickup-date" class="form-control" required/>
+      </div>
+      <div class="col-md-3">
+        <label for="return-date" class="form-label">Return Date</label>
+        <input type="date" id="return-date" class="form-control" required/>
+      </div>
+
+      <!-- Customer info -->
+      <div class="col-md-6">
+        <label for="cust-name" class="form-label">Your Name</label>
+        <input type="text" id="cust-name" class="form-control" placeholder="Full Name" required/>
+      </div>
+      <div class="col-md-3">
+        <label for="cust-email" class="form-label">Email</label>
+        <input type="email" id="cust-email" class="form-control" placeholder="you@example.com" required/>
+      </div>
+      <div class="col-md-3">
+        <label for="cust-phone" class="form-label">Phone</label>
+        <input type="tel" id="cust-phone" class="form-control" placeholder="0412 345 678" required/>
+      </div>
+
+      <!-- Total cost display -->
+      <div class="col-12">
+        <p class="h5">Total Cost: $<span id="total-cost">0</span></p>
+      </div>
+
+      <!-- Submit -->
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-success btn-lg">Confirm Booking</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="footer"></div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Loader for header & footer -->
+  <script src="assets/js/include-partials.js"></script>
+  <!-- Booking form total-calculation script -->
+  <script>
+    const form     = document.getElementById('booking-form');
+    const carSelect = document.getElementById('car-select');
+    const pickUp   = document.getElementById('pickup-date');
+    const returnD  = document.getElementById('return-date');
+    const totalEl  = document.getElementById('total-cost');
+
+    function updateTotal() {
+      const rate = parseFloat(carSelect.value) || 0;
+      const start = new Date(pickUp.value);
+      const end   = new Date(returnD.value);
+      const days  = (end - start) / (1000*60*60*24);
+      const total = (days > 0) ? (days * rate).toFixed(2) : 0;
+      totalEl.textContent = total;
+    }
+
+    [carSelect, pickUp, returnD].forEach(el =>
+      el.addEventListener('change', updateTotal)
+    );
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      alert(`Thanks, ${document.getElementById('cust-name').value}! Your booking for $${totalEl.textContent} is confirmed.`);
+      form.reset();
+      totalEl.textContent = '0';
+    });
+  </script>
+</body>
+</html>
