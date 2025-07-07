@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCarRental – Customer Details</title>
+
+  <!-- Bootstrap & FontAwesome -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Custom Styles -->
+  <style>
+    .top-buttons .btn {
+      margin: 0 5px;
+    }
+    .nav-tabs .nav-link {
+      margin: 0 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ▼ shared navbar ▼ -->
+  <div id="header"></div>
+
+  <div class="container mt-4">
+    <!-- Top action buttons -->
+    <div class="text-center mb-3 top-buttons">
+      <a href="payments-direct-debit.html" class="btn btn-primary">Direct Debit</a>
+      <a href="payments-card.html" class="btn btn-success">Card Payment</a>
+      <a href="rentals-new.html" class="btn btn-info">Add New Rental</a>
+      <a href="pick-up.html" class="btn btn-dark">Pick Up</a>
+      <a href="return.html" class="btn btn-secondary">Return</a>
+      <a href="notes.html" class="btn btn-warning">Notes</a>
+    </div>
+
+    <!-- Customer sub-tabs -->
+    <ul class="nav nav-tabs justify-content-center mb-4">
+      <li class="nav-item">
+        <a class="nav-link active" href="customer.html">Customer Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="rental-vehicle.html">Rental Vehicle</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="rental-agreement.html">Rental Agreement</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="payment-details.html">Payment Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="invoices.html">Invoices</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="pickup-return.html">Pickup/Return</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="notification.html">Notification</a>
+      </li>
+    </ul>
+
+    <!-- Customer Info & Documents -->
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-header">Customer Detail</div>
+          <div class="card-body">
+            <p><strong>Full Name:</strong> IBRAHIM BOUKHABZA</p>
+            <p><strong>Address:</strong> 22 Jane Bel Lane</p>
+            <p><strong>State:</strong> VIC</p>
+            <p><strong>Company Name:</strong> SOLUTIONSDASH</p>
+            <p><strong>Suburb:</strong> Melbourne</p>
+            <p><strong>Email:</strong> zlatan.18110@gmail.com</p>
+            <p><strong>DOB:</strong> 06-09-1999</p>
+            <p><strong>Postcode:</strong> 3000</p>
+            <p><strong>Phone:</strong> 0410332546</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Customer Documents</div>
+          <div class="card-body p-0">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Document Name</th>
+                  <th>Document No.</th>
+                  <th>Document State</th>
+                  <th>Document Expiry</th>
+                  <th>Front Image</th>
+                  <th>Back Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>International Licence</td>
+                  <td>FR250350201781</td>
+                  <td></td>
+                  <td>05-03-2028</td>
+                  <td><i class="fas fa-download"></i></td>
+                  <td><i class="fas fa-download"></i></td>
+                  <td><i class="fas fa-trash-alt text-danger"></i></td>
+                </tr>
+                <!-- more rows as needed -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Customer Info & Documents -->
+  </div>
+
+  <!-- ▼ shared footer ▼ -->
+  <div id="footer"></div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- loader script -->
+  <script src="assets/js/include-partials.js"></script>
+</body>
+</html>
