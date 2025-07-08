@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Toyota Corolla",
+    "category": "sedan",
+    "pricePerDay": 40,
+    "image": "https://via.placeholder.com/300x200?text=Toyota+Corolla"
+  },
+  {
+    "id": 2,
+    "name": "Honda CR-V",
+    "category": "suv",
+    "pricePerDay": 55,
+    "image": "https://via.placeholder.com/300x200?text=Honda+CR-V"
+  }
+
+]

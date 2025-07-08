@@ -1,0 +1,165 @@
+/*
+  assets/css/custom.css
+  Custom styles for MyCarRental
+*/
+
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --light-bg: #f8f9fa;
+  --dark-bg: #343a40;
+  --text-color: #212529;
+  --border-radius: 0.5rem;
+  --transition-speed: 0.3s;
+}
+
+/* Base styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+a:hover {
+  color: var(--primary-color);
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #eaeaea;
+}
+.navbar-brand {
+  font-weight: 600;
+  color: var(--primary-color) !important;
+}
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem;
+  color: var(--text-color) !important;
+  transition: color var(--transition-speed);
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--primary-color) !important;
+}
+
+/* Buttons */
+.btn {
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* Hero Section (index) */
+.hero {
+  background-color: var(--light-bg);
+  padding: 4rem 0;
+  text-align: center;
+}
+.hero .display-5 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.hero .lead {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+.hero .btn {
+  min-width: 150px;
+}
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+/* Customer Page */
+.top-buttons .btn {
+  margin: 0 5px;
+}
+.nav-tabs .nav-link {
+  margin: 0 3px;
+}
+
+/* Cars page filter bar */
+#filter-category,
+#sort-by {
+  border-radius: var(--border-radius);
+}
+
+/* Cards */
+.card {
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.card-header {
+  font-weight: 600;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  border-radius: var(--border-radius);
+  transition: box-shadow var(--transition-speed);
+}
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Tables */
+.table {
+  margin-bottom: 0;
+}
+.table th,
+.table td {
+  vertical-align: middle;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #fafafa;
+}
+
+/* Footer */
+footer {
+  background-color: var(--dark-bg);
+}
+footer p,
+footer a {
+  color: #ffffff;
+  margin: 0;
+  font-size: 0.9rem;
+}
+footer a:hover {
+  color: var(--primary-color);
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .hero .display-5 {
+    font-size: 2rem;
+  }
+  .top-buttons .btn,
+  .nav-tabs .nav-link {
+    margin: 0 2px;
+  }
+}
