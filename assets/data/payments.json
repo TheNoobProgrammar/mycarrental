@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "method": "Visa **** 1234",
+    "date": "2025-06-28",
+    "amount": 120.00,
+    "status": "Paid"
+  },
+  {
+    "id": 2,
+    "method": "Mastercard **** 5678",
+    "date": "2025-07-02",
+    "amount": 80.00,
+    "status": "Paid"
+  }
+]

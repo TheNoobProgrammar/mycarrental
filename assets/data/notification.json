@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Booking Confirmed",
+    "message": "Your booking for Toyota Corolla on 2025-07-12 is confirmed.",
+    "time": "2025-07-06T14:00:00Z",
+    "unread": true
+  },
+  {
+    "id": 2,
+    "title": "Invoice Paid",
+    "message": "Payment for Invoice #INV-1001 was successful.",
+    "time": "2025-07-05T09:30:00Z",
+    "unread": false
+  },
+  {
+    "id": 3,
+    "title": "Reminder: Return Due",
+    "message": "Your rental for Honda CR-V is due for return on 2025-07-10.",
+    "time": "2025-07-03T16:45:00Z",
+    "unread": false
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "invoiceNo": "INV-1001",
+    "date": "2025-07-01",
+    "amount": 120.00,
+    "status": "Paid",
+    "file": "assets/invoices/INV-1001.pdf"
+  },
+  {
+    "id": 2,
+    "invoiceNo": "INV-1002",
+    "date": "2025-07-05",
+    "amount": 200.00,
+    "status": "Pending",
+    "file": "assets/invoices/INV-1002.pdf"
+  }
+  
+]
