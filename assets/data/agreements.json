@@ -1,0 +1,16 @@
+[
+  {
+    "rentalId": 1,
+    "agreementNo": "AGR-0001",
+    "dateIssued": "2025-07-10",
+    "terms": "Full insurance included. No smoking.",
+    "signed": true
+  },
+  {
+    "rentalId": 2,
+    "agreementNo": "AGR-0002",
+    "dateIssued": "2025-06-01",
+    "terms": "Basic insurance. Late fee applies.",
+    "signed": false
+  }
+]

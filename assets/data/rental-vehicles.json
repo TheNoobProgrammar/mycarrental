@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "customerId": 1,
+    "carId": 2,
+    "pickupDate": "2025-07-10T09:00:00Z",
+    "returnDate": "2025-07-15T17:00:00Z",
+    "status": "Active"
+  },
+  {
+    "id": 2,
+    "customerId": 1,
+    "carId": 1,
+    "pickupDate": "2025-06-01T10:00:00Z",
+    "returnDate": "2025-06-05T16:00:00Z",
+    "status": "Completed"
+  }
+  
+]

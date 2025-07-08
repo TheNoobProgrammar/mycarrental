@@ -6,14 +6,10 @@
   <title>MyCarRental – Pickup & Return</title>
 
   <!-- Bootstrap 5 CSS -->
-  <link 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-    rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Font Awesome for icons -->
-  <link 
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
-    rel="stylesheet"/>
-  <!-- Optional custom CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
   <link href="assets/css/custom.css" rel="stylesheet"/>
 </head>
 <body>
@@ -22,8 +18,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="index.html">MyCarRental</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-              data-bs-target="#navbarNav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -32,9 +27,9 @@
           <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
           <li class="nav-item"><a class="nav-link" href="booking.html">Bookings</a></li>
           <li class="nav-item"><a class="nav-link" href="customer.html">Customer</a></li>
-          <li class="nav-item"><a class="nav-link" href="payment-details.html">Payment</a></li>
+          <li class="nav-item"><a class="nav-link" href="payment-details.html">Payments</a></li>
           <li class="nav-item"><a class="nav-link" href="invoices.html">Invoices</a></li>
-          <li class="nav-item"><a class="nav-link" href="pickup-return.html">Pickup/Return</a></li>
+          <li class="nav-item"><a class="nav-link active" href="pickup-return.html">Pickup/Return</a></li>
           <li class="nav-item"><a class="nav-link" href="notification.html">Notifications</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
@@ -48,6 +43,21 @@
   <main class="container my-5">
     <h2 class="mb-4 text-center">Vehicle Pickup & Return</h2>
 
+    <!-- History of past pickups & returns -->
+    <div class="mb-5">
+      <h4>History</h4>
+      <!-- Spinner while loading -->
+      <div id="returns-spinner" class="text-center d-none" role="status" aria-live="polite">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
+      </div>
+      <!-- Empty-state message -->
+      <p id="returns-empty" class="text-muted text-center d-none" aria-live="polite">
+        No pickup/return history.
+      </p>
+      <!-- History container -->
+      <div id="return-list" class="list-group" aria-live="polite" aria-busy="false"></div>
+    </div>
+
     <div class="row gy-4">
       <!-- Pickup Section -->
       <div class="col-md-6">
@@ -56,25 +66,24 @@
             <i class="fas fa-car-side me-2"></i>Pickup Details
           </div>
           <div class="card-body">
-            <form>
+            <form id="pickup-form">
+              <!-- validation feedback -->
+              <div id="pickup-error" class="alert alert-danger d-none"></div>
+              <div id="pickup-success" class="alert alert-success d-none"></div>
               <div class="mb-3">
                 <label for="pickup-date" class="form-label">Pickup Date & Time</label>
                 <input type="datetime-local" id="pickup-date" class="form-control" required/>
               </div>
               <div class="mb-3">
                 <label for="pickup-location" class="form-label">Location</label>
-                <input type="text" id="pickup-location" class="form-control" 
-                       placeholder="123 Rental Ave, Melbourne VIC" required/>
+                <input type="text" id="pickup-location" class="form-control" placeholder="123 Rental Ave, Melbourne VIC" required/>
               </div>
               <div class="mb-3">
                 <label for="pickup-agent" class="form-label">Agent Name</label>
-                <input type="text" id="pickup-agent" class="form-control" 
-                       placeholder="Staff Member" required/>
+                <input type="text" id="pickup-agent" class="form-control" placeholder="Staff Member" required/>
               </div>
               <div class="text-end">
-                <button type="submit" class="btn btn-primary">
-                  Confirm Pickup
-                </button>
+                <button type="submit" class="btn btn-primary">Confirm Pickup</button>
               </div>
             </form>
           </div>
@@ -88,15 +97,17 @@
             <i class="fas fa-undo-alt me-2"></i>Return Details
           </div>
           <div class="card-body">
-            <form>
+            <form id="return-form">
+              <!-- validation feedback -->
+              <div id="return-error" class="alert alert-danger d-none"></div>
+              <div id="return-success" class="alert alert-success d-none"></div>
               <div class="mb-3">
                 <label for="return-date" class="form-label">Return Date & Time</label>
                 <input type="datetime-local" id="return-date" class="form-control" required/>
               </div>
               <div class="mb-3">
                 <label for="return-location" class="form-label">Location</label>
-                <input type="text" id="return-location" class="form-control" 
-                       placeholder="123 Rental Ave, Melbourne VIC" required/>
+                <input type="text" id="return-location" class="form-control" placeholder="123 Rental Ave, Melbourne VIC" required/>
               </div>
               <div class="mb-3">
                 <label for="fuel-level" class="form-label">Fuel Level</label>
@@ -110,9 +121,7 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="submit" class="btn btn-success">
-                  Confirm Return
-                </button>
+                <button type="submit" class="btn btn-success">Confirm Return</button>
               </div>
             </form>
           </div>
@@ -132,9 +141,60 @@
       </div>
     </div>
   </footer>
-  <!-- End Footer -->
 
-  <!-- Bootstrap JS Bundle (for mobile menu) -->
+  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Load returns history from JSON -->
+  <script src="assets/js/load-returns.js"></script>
+  <!-- Pickup form handler -->
+  <script>
+    const pickForm = document.getElementById('pickup-form');
+    const pickErr = document.getElementById('pickup-error');
+    const pickSuc = document.getElementById('pickup-success');
+
+    pickForm.addEventListener('submit', e => {
+      e.preventDefault();
+      pickErr.classList.add('d-none');
+      pickSuc.classList.add('d-none');
+      
+      const date = document.getElementById('pickup-date').value;
+      const loc  = document.getElementById('pickup-location').value.trim();
+      const agt  = document.getElementById('pickup-agent').value.trim();
+
+      if (!date || !loc || !agt) {
+        pickErr.textContent = 'All fields are required.';
+        pickErr.classList.remove('d-none');
+        return;
+      }
+      pickSuc.textContent = 'Pickup recorded!';
+      pickSuc.classList.remove('d-none');
+      pickForm.reset();
+    });
+  </script>
+  <!-- Return form handler -->
+  <script>
+    const retForm = document.getElementById('return-form');
+    const retErr  = document.getElementById('return-error');
+    const retSuc  = document.getElementById('return-success');
+
+    retForm.addEventListener('submit', e => {
+      e.preventDefault();
+      retErr.classList.add('d-none');
+      retSuc.classList.add('d-none');
+
+      const date = document.getElementById('return-date').value;
+      const loc  = document.getElementById('return-location').value.trim();
+      const fuel = document.getElementById('fuel-level').value;
+
+      if (!date || !loc || !fuel) {
+        retErr.textContent = 'Please complete all fields.';
+        retErr.classList.remove('d-none');
+        return;
+      }
+      retSuc.textContent = 'Return recorded!';
+      retSuc.classList.remove('d-none');
+      retForm.reset();
+    });
+  </script>
 </body>
 </html>

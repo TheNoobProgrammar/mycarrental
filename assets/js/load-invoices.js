@@ -1,34 +1,30 @@
-// load-invoices.js
 document.addEventListener('DOMContentLoaded', () => {
-  const tbody = document.getElementById('invoice-list');
+  const spinner = document.getElementById('invoices-spinner');
+  const empty   = document.getElementById('invoices-empty');
+  const tbody   = document.getElementById('invoice-list');
+
+  spinner.classList.remove('d-none');
+  empty.classList.add('d-none');
+  tbody.setAttribute('aria-busy','true');
 
   fetch('assets/data/invoices.json')
-    .then(r => r.json())
-    .then(invoices => {
-      tbody.innerHTML = '';
-      invoices.forEach(inv => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <th scope="row">${inv.id}</th>
-          <td>${inv.invoiceNo}</td>
-          <td>${inv.date}</td>
-          <td>$${inv.amount.toFixed(2)}</td>
-          <td>
-            <span class="badge bg-${inv.status === 'Paid' ? 'success' : 'warning'} 
-                          ${inv.status === 'Pending' ? 'text-dark' : ''}">
-              ${inv.status}
-            </span>
-          </td>
-          <td>
-            <a href="${inv.file}" download class="text-decoration-none">
-              <i class="fas fa-file-pdf fa-lg text-danger"></i>
-            </a>
-          </td>`;
-        tbody.appendChild(tr);
-      });
+    .then(r=>r.json())
+    .then(invoices=>{
+      spinner.classList.add('d-none');
+      tbody.setAttribute('aria-busy','false');
+      if(!invoices.length){
+        empty.textContent='No invoices found.';
+        empty.classList.remove('d-none');
+        return;
+      }
+      tbody.innerHTML='';
+      invoices.forEach(inv=>{/* render rows... */});
     })
-    .catch(err => {
-      tbody.innerHTML = `<tr><td colspan="6" class="text-danger">Failed to load invoices.</td></tr>`;
+    .catch(err=>{
+      spinner.classList.add('d-none');
+      tbody.setAttribute('aria-busy','false');
+      empty.textContent='Failed to load invoices.';
+      empty.classList.remove('d-none');
       console.error(err);
     });
 });

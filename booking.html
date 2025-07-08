@@ -19,15 +19,15 @@
 <body>
   <!-- Shared Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">MyCarRental</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+    <div class="container">
+      <a class="navbar-brand" href="index.html">MyCarRental</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
           <li class="nav-item"><a class="nav-link" href="booking.html">Bookings</a></li>
           <li class="nav-item"><a class="nav-link" href="customer.html">Customer</a></li>
@@ -38,11 +38,10 @@
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Sign Up</a></li>
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
+  </nav>
 
   <main class="container my-5">
     <h2 class="mb-4 text-center">Book Your Car</h2>
@@ -83,6 +82,14 @@
         <input type="tel" id="cust-phone" class="form-control" placeholder="0412 345 678" required/>
       </div>
 
+      <!-- Validation error & spinner -->
+      <div class="col-12">
+        <div id="booking-error" class="alert alert-danger d-none"></div>
+        <div id="booking-spinner" class="text-center my-3 d-none">
+          <i class="fas fa-spinner fa-spin fa-2x"></i>
+        </div>
+      </div>
+
       <!-- Total cost display -->
       <div class="col-12">
         <p class="h5">Total Cost: $<span id="total-cost">0</span></p>
@@ -95,7 +102,7 @@
     </form>
   </main>
 
- <!-- Footer -->
+  <!-- Footer -->
   <footer class="bg-dark text-white py-4 mt-5">
     <div class="container text-center">
       <p class="mb-1">&copy; 2025 MyCarRental. All rights reserved.</p>
@@ -106,21 +113,22 @@
       </div>
     </div>
   </footer>
-  <!-- End Footer -->
 
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Booking form total-calculation script -->
+  <!-- Enhanced booking form script -->
   <script>
-    const form     = document.getElementById('booking-form');
-    const carSelect = document.getElementById('car-select');
-    const pickUp   = document.getElementById('pickup-date');
-    const returnD  = document.getElementById('return-date');
-    const totalEl  = document.getElementById('total-cost');
+    const form       = document.getElementById('booking-form');
+    const carSelect  = document.getElementById('car-select');
+    const pickUp     = document.getElementById('pickup-date');
+    const returnD    = document.getElementById('return-date');
+    const totalEl    = document.getElementById('total-cost');
+    const errEl      = document.getElementById('booking-error');
+    const spinnerEl  = document.getElementById('booking-spinner');
 
     function updateTotal() {
-      const rate = parseFloat(carSelect.value) || 0;
+      const rate  = parseFloat(carSelect.value) || 0;
       const start = new Date(pickUp.value);
       const end   = new Date(returnD.value);
       const days  = (end - start) / (1000*60*60*24);
@@ -129,14 +137,39 @@
     }
 
     [carSelect, pickUp, returnD].forEach(el =>
-      el.addEventListener('change', updateTotal)
+      el.addEventListener('change', () => {
+        errEl.classList.add('d-none');
+        updateTotal();
+      })
     );
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      alert(`Thanks, ${document.getElementById('cust-name').value}! Your booking for $${totalEl.textContent} is confirmed.`);
-      form.reset();
-      totalEl.textContent = '0';
+      errEl.classList.add('d-none');
+
+      const start = new Date(pickUp.value),
+            end   = new Date(returnD.value);
+      if (!carSelect.value || !pickUp.value || !returnD.value) {
+        errEl.textContent = 'Please fill out all fields.';
+        errEl.classList.remove('d-none');
+        return;
+      }
+      if (end <= start) {
+        errEl.textContent = 'Return date must be after pick-up date.';
+        errEl.classList.remove('d-none');
+        return;
+      }
+
+      // Show spinner
+      spinnerEl.classList.remove('d-none');
+
+      // Simulate network request
+      setTimeout(() => {
+        spinnerEl.classList.add('d-none');
+        alert(`Thanks, ${document.getElementById('cust-name').value}! Your booking for $${totalEl.textContent} is confirmed.`);
+        form.reset();
+        totalEl.textContent = '0';
+      }, 1500);
     });
   </script>
 </body>

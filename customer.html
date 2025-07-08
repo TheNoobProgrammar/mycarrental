@@ -14,25 +14,23 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     rel="stylesheet"
   />
-  <!-- Optional custom CSS -->
+  <!-- Custom CSS -->
   <link href="assets/css/custom.css" rel="stylesheet"/>
 </head>
-
 <body>
-  <!-- ▼ shared navbar ▼ -->
- <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">MyCarRental</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+  <!-- Shared Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">MyCarRental</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
           <li class="nav-item"><a class="nav-link" href="booking.html">Bookings</a></li>
-          <li class="nav-item"><a class="nav-link" href="customer.html">Customer</a></li>
+          <li class="nav-item"><a class="nav-link active" href="customer.html">Customer</a></li>
           <li class="nav-item"><a class="nav-link" href="payment-details.html">Payment</a></li>
           <li class="nav-item"><a class="nav-link" href="invoices.html">Invoices</a></li>
           <li class="nav-item"><a class="nav-link" href="pickup-return.html">Pickup/Return</a></li>
@@ -40,11 +38,10 @@
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Sign Up</a></li>
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
+  </nav>
 
   <div class="container mt-4">
     <!-- Top action buttons -->
@@ -59,27 +56,13 @@
 
     <!-- Customer sub-tabs -->
     <ul class="nav nav-tabs justify-content-center mb-4">
-      <li class="nav-item">
-        <a class="nav-link active" href="customer.html">Customer Details</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="rental-vehicle.html">Rental Vehicle</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="rental-agreement.html">Rental Agreement</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="payment-details.html">Payment Details</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="invoices.html">Invoices</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="pickup-return.html">Pickup/Return</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="notification.html">Notification</a>
-      </li>
+      <li class="nav-item"><a class="nav-link active" href="customer.html">Customer Details</a></li>
+      <li class="nav-item"><a class="nav-link" href="rental-vehicle.html">Rental Vehicle</a></li>
+      <li class="nav-item"><a class="nav-link" href="rental-agreement.html">Rental Agreement</a></li>
+      <li class="nav-item"><a class="nav-link" href="payment-details.html">Payment Details</a></li>
+      <li class="nav-item"><a class="nav-link" href="invoices.html">Invoices</a></li>
+      <li class="nav-item"><a class="nav-link" href="pickup-return.html">Pickup/Return</a></li>
+      <li class="nav-item"><a class="nav-link" href="notification.html">Notification</a></li>
     </ul>
 
     <!-- Customer Info & Documents -->
@@ -87,27 +70,31 @@
       <div class="col-md-6 mb-4">
         <div class="card">
           <div class="card-header">Customer Detail</div>
-          <div class="card-body" id="customer-details">
+          <div class="card-body">
+            <!-- Spinner while loading -->
+            <div id="customer-spinner" class="text-center d-none" role="status" aria-live="polite">
+              <i class="fas fa-spinner fa-spin fa-2x"></i>
+            </div>
+            <!-- Empty state -->
+            <p id="customer-empty" class="text-muted text-center d-none" aria-live="polite">
+              No customer data.
+            </p>
+            <!-- Data container -->
+            <div id="customer-details" aria-live="polite" aria-busy="false"></div>
           </div>
         </div>
       </div>
+
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">Customer Documents</div>
           <div class="card-body p-0">
             <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Document Name</th>
-                  <th>Document No.</th>
-                  <th>Document State</th>
-                  <th>Document Expiry</th>
-                  <th>Front Image</th>
-                  <th>Back Image</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
+              <thead><tr>
+                <th>Id</th><th>Document Name</th><th>Document No.</th>
+                <th>Document State</th><th>Document Expiry</th>
+                <th>Front Image</th><th>Back Image</th><th>Action</th>
+              </tr></thead>
               <tbody>
                 <tr>
                   <td>1</td>
@@ -119,7 +106,6 @@
                   <td><i class="fas fa-download"></i></td>
                   <td><i class="fas fa-trash-alt text-danger"></i></td>
                 </tr>
-                <!-- more rows as needed -->
               </tbody>
             </table>
           </div>
@@ -129,7 +115,7 @@
     <!-- end Customer Info & Documents -->
   </div>
 
-<!-- Footer -->
+  <!-- Footer -->
   <footer class="bg-dark text-white py-4 mt-5">
     <div class="container text-center">
       <p class="mb-1">&copy; 2025 MyCarRental. All rights reserved.</p>

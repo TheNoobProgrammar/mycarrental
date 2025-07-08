@@ -1,11 +1,45 @@
 // assets/js/load-cars.js
-document.addEventListener('DOMContentLoaded', () => {
-  let cars = [];                            // will hold all fetched cars
-  const listEl    = document.getElementById('car-list');
-  const filterEl  = document.getElementById('filter-category');
-  const sortEl    = document.getElementById('sort-by');
+// Enhanced loader for cars with spinner and empty-state handling
 
-  // Render a given array of cars into the grid
+document.addEventListener('DOMContentLoaded', () => {
+  const spinner = document.getElementById('cars-spinner');
+  const emptyMsg = document.getElementById('cars-empty');
+  const listEl = document.getElementById('car-list');
+
+  // Initially show spinner, hide empty message, mark busy
+  spinner.classList.remove('d-none');
+  emptyMsg.classList.add('d-none');
+  listEl.setAttribute('aria-busy', 'true');
+
+  // Fetch car data
+  fetch('assets/data/cars.json')
+    .then(response => response.json())
+    .then(cars => {
+      // Hide spinner and clear busy flag
+      spinner.classList.add('d-none');
+      listEl.setAttribute('aria-busy', 'false');
+
+      // If no cars, show empty message
+      if (!cars.length) {
+        emptyMsg.textContent = 'No cars available.';
+        emptyMsg.classList.remove('d-none');
+        return;
+      }
+
+      // Otherwise, render the car cards
+      renderCars(cars);
+    })
+    .catch(error => {
+      console.error('Error loading cars:', error);
+      // Hide spinner and clear busy flag
+      spinner.classList.add('d-none');
+      listEl.setAttribute('aria-busy', 'false');
+      // Show error in empty message
+      emptyMsg.textContent = 'Failed to load cars.';
+      emptyMsg.classList.remove('d-none');
+    });
+
+  // Render function (same as before)
   function renderCars(data) {
     listEl.innerHTML = '';
     data.forEach(car => {
@@ -23,39 +57,4 @@ document.addEventListener('DOMContentLoaded', () => {
       listEl.appendChild(col);
     });
   }
-
-  // Apply current filter & sort settings, then render
-  function applyFiltersAndSort() {
-    let result = [...cars];
-
-    // 1. Filter by category
-    const category = filterEl.value;
-    if (category !== 'all') {
-      result = result.filter(c => c.category === category);
-    }
-
-    // 2. Sort
-    const sortBy = sortEl.value;
-    if (sortBy === 'price-asc') {
-      result.sort((a, b) => a.pricePerDay - b.pricePerDay);
-    } else if (sortBy === 'price-desc') {
-      result.sort((a, b) => b.pricePerDay - a.pricePerDay);
-    }
-    // if you later add an 'availability' property, you can handle it here
-
-    renderCars(result);
-  }
-
-  // Fetch data and initialize
-  fetch('assets/data/cars.json')
-    .then(res => res.json())
-    .then(data => {
-      cars = data;
-      applyFiltersAndSort();
-    })
-    .catch(console.error);
-
-  // Re-apply when user changes filter or sort
-  filterEl.addEventListener('change', applyFiltersAndSort);
-  sortEl.addEventListener('change',   applyFiltersAndSort);
 });

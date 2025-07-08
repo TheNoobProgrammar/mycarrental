@@ -1,27 +1,30 @@
-// assets/js/load-notifications.js
 document.addEventListener('DOMContentLoaded', () => {
-  const list = document.getElementById('notification-list');
+  const spinner = document.getElementById('notifications-spinner');
+  const empty   = document.getElementById('notifications-empty');
+  const list    = document.getElementById('notification-list');
+
+  spinner.classList.remove('d-none');
+  empty.classList.add('d-none');
+  list.setAttribute('aria-busy','true');
 
   fetch('assets/data/notifications.json')
-    .then(r => r.json())
-    .then(items => {
-      list.innerHTML = '';
-      items.forEach(n => {
-        const a = document.createElement('a');
-        a.href = '#';
-        a.className = 'list-group-item list-group-item-action' + (n.unread ? ' active' : '');
-        a.innerHTML = `
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">${n.title}</h5>
-            <small>${new Date(n.time).toLocaleString()}</small>
-          </div>
-          <p class="mb-1">${n.message}</p>
-        `;
-        list.appendChild(a);
-      });
+    .then(r=>r.json())
+    .then(items=>{
+      spinner.classList.add('d-none');
+      list.setAttribute('aria-busy','false');
+      if(!items.length){
+        empty.textContent='No notifications.';
+        empty.classList.remove('d-none');
+        return;
+      }
+      list.innerHTML='';
+      items.forEach(n=>{/* render items... */});
     })
-    .catch(err => {
-      list.innerHTML = '<div class="text-danger p-3">Failed to load notifications.</div>';
+    .catch(err=>{
+      spinner.classList.add('d-none');
+      list.setAttribute('aria-busy','false');
+      empty.textContent='Failed to load notifications.';
+      empty.classList.remove('d-none');
       console.error(err);
     });
 });

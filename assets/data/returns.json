@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "customerId": 1,
+    "rentalId": 1,
+    "type": "pickup",
+    "datetime": "2025-07-10T09:00:00Z",
+    "location": "123 Rental Ave, Melbourne VIC"
+  },
+  {
+    "id": 2,
+    "customerId": 1,
+    "rentalId": 1,
+    "type": "return",
+    "datetime": "2025-07-15T17:00:00Z",
+    "location": "123 Rental Ave, Melbourne VIC",
+    "fuelLevel": "Full"
+  }
+  
+]
