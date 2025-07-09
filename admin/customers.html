@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCarRental Admin – Customers</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="../assets/css/custom.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Admin Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="cars.html">Admin Panel</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
+          <li class="nav-item"><a class="nav-link" href="bookings.html">Bookings</a></li>
+          <li class="nav-item"><a class="nav-link active" href="customers.html">Customers</a></li>
+          <li class="nav-item"><a class="nav-link" href="invoices.html">Invoices</a></li>
+          <li class="nav-item"><a class="nav-link" href="payments.html">Payments</a></li>
+          <li class="nav-item"><a class="nav-link" href="logout.html">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-5">
+    <h1 class="mb-4">Manage Customers</h1>
+
+    <!-- Add Customer Form -->
+    <div class="card mb-5">
+      <div class="card-header bg-primary text-white">Add New Customer</div>
+      <div class="card-body">
+        <form id="add-customer-form" class="row g-3">
+          <div class="col-md-6">
+            <label for="cust-name" class="form-label">Full Name</label>
+            <input type="text" id="cust-name" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label for="cust-email" class="form-label">Email</label>
+            <input type="email" id="cust-email" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label for="cust-phone" class="form-label">Phone</label>
+            <input type="tel" id="cust-phone" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label for="cust-address" class="form-label">Address</label>
+            <input type="text" id="cust-address" class="form-control" required />
+          </div>
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-success">Add Customer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Customers Table -->
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-customer-list">
+          <!-- Rows injected via JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Admin customers script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const listEl = document.getElementById('admin-customer-list');
+      const form   = document.getElementById('add-customer-form');
+      let customers = JSON.parse(localStorage.getItem('adminCustomers') || '[]');
+
+      function renderCustomers(arr) {
+        listEl.innerHTML = '';
+        arr.forEach(c => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${c.id}</td>
+            <td>${c.name}</td>
+            <td>${c.email}</td>
+            <td>${c.phone}</td>
+            <td>${c.address}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2">Edit</button>
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </td>`;
+          listEl.appendChild(row);
+        });
+      }
+
+      renderCustomers(customers);
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const name    = document.getElementById('cust-name').value.trim();
+        const email   = document.getElementById('cust-email').value.trim();
+        const phone   = document.getElementById('cust-phone').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
+        const id      = customers.length ? customers[customers.length - 1].id + 1 : 1;
+        customers.push({ id, name, email, phone, address });
+        localStorage.setItem('adminCustomers', JSON.stringify(customers));
+        renderCustomers(customers);
+        form.reset();
+      });
+    });
+  </script>
+</body>
+</html>

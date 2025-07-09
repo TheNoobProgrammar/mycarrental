@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCarRental Admin – Bookings</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="../assets/css/custom.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Admin Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="cars.html">Admin Panel</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
+          <li class="nav-item"><a class="nav-link active" href="bookings.html">Bookings</a></li>
+          <li class="nav-item"><a class="nav-link" href="customers.html">Customers</a></li>
+          <li class="nav-item"><a class="nav-link" href="invoices.html">Invoices</a></li>
+          <li class="nav-item"><a class="nav-link" href="payments.html">Payments</a></li>
+          <li class="nav-item"><a class="nav-link" href="logout.html">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-5">
+    <h1 class="mb-4">Manage Bookings</h1>
+    <!-- Add Booking Form -->
+    <div class="card mb-5">
+      <div class="card-header bg-primary text-white">Add New Booking</div>
+      <div class="card-body">
+        <form id="add-booking-form" class="row g-3">
+          <div class="col-md-4">
+            <label for="booking-car" class="form-label">Car ID</label>
+            <input type="number" id="booking-car" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label for="booking-customer" class="form-label">Customer ID</label>
+            <input type="number" id="booking-customer" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label for="booking-date" class="form-label">Pick-Up Date</label>
+            <input type="date" id="booking-date" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label for="return-date" class="form-label">Return Date</label>
+            <input type="date" id="return-date" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label for="booking-status" class="form-label">Status</label>
+            <select id="booking-status" class="form-select" required>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Pending">Pending</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-success">Add Booking</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bookings Table -->
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Car ID</th>
+            <th>Customer ID</th>
+            <th>Pick-Up</th>
+            <th>Return</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-booking-list">
+          <!-- Rows injected via JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Admin bookings script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const listEl = document.getElementById('admin-booking-list');
+      const form   = document.getElementById('add-booking-form');
+      let bookings = JSON.parse(localStorage.getItem('adminBookings') || '[]');
+
+      function renderBookings(arr) {
+        listEl.innerHTML = '';
+        arr.forEach(b => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${b.id}</td>
+            <td>${b.carId}</td>
+            <td>${b.customerId}</td>
+            <td>${b.pickUp}</td>
+            <td>${b.returnDate}</td>
+            <td>${b.status}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2">Edit</button>
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </td>`;
+          listEl.appendChild(row);
+        });
+      }
+
+      renderBookings(bookings);
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const carId      = parseInt(document.getElementById('booking-car').value, 10);
+        const customerId = parseInt(document.getElementById('booking-customer').value, 10);
+        const pickUp     = document.getElementById('booking-date').value;
+        const returnDate = document.getElementById('return-date').value;
+        const status     = document.getElementById('booking-status').value;
+        const id         = bookings.length ? bookings[bookings.length - 1].id + 1 : 1;
+        bookings.push({ id, carId, customerId, pickUp, returnDate, status });
+        localStorage.setItem('adminBookings', JSON.stringify(bookings));
+        renderBookings(bookings);
+        form.reset();
+      });
+    });
+  </script>
+</body>
+</html>
